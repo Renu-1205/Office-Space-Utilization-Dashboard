@@ -38,8 +38,5 @@ Department Rank = RANKX(ALL(office_data[department_name]), [Utilization %], , DE
 
 ## 8. Underutilized Flag (Below 15%)
 Is Underutilized = IF([Utilization %] < 15, "Underutilized", "Well Utilized")
-**Note:** Replace `office_data` with your actual table name if different.
-```
 
----
 

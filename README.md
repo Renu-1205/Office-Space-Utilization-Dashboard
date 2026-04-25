@@ -1,6 +1,6 @@
-# 🏢 Office Space Utilization & Cost Efficiency Dashboard
+# Office Space Utilization & Cost Efficiency Dashboard
 
-## 📌 Project Overview
+## Project Overview
 
 **Business Problem:**  
 Organizations incur significant real estate costs due to underutilized office spaces. Without usage data, facility managers cannot optimize layouts, leading to inefficiencies and wasted resources.
@@ -16,9 +16,9 @@ Identified opportunities to reduce real estate costs by **15–25%** through dat
 
 ---
 
-## 🎯 Key Insights from Dashboard
+## Key Insights from Dashboard
 
-### 🔹 1. Space Type Utilization vs Cost
+### 1. Space Type Utilization vs Cost
 
 | Space Type | Utilization (%) | Cost per Occupant |
 |------------|----------------|-------------------|
@@ -28,32 +28,32 @@ Identified opportunities to reduce real estate costs by **15–25%** through dat
 | Workstation | ~60% | Highest (~90+) |
 | Lounge | ~50% | Moderate (~18) |
 
-**👉 Key Finding:**
+**Key Finding:**
 - Workstations are the biggest inefficiency → high cost but underutilized
 - Private offices are fully utilized → potential shortage
 - Lounges and open areas show excess capacity
 
 ---
 
-### 🔹 2. Time-Based Utilization
+### 2. Time-Based Utilization
 
 - **Peak usage:** 10 AM – 2 PM
 - **Low usage:** Early morning & evening
 
-**👉 Insight:** Demand is time-concentrated, enabling flexible scheduling and shared usage models.
+**Insight:** Demand is time-concentrated, enabling flexible scheduling and shared usage models.
 
 ---
 
-### 🔹 3. Day-of-Week Trends
+### 3. Day-of-Week Trends
 
 - **Highest:** Sunday, Friday, Tuesday (~65–70%)
 - **Lowest:** Mid-week (~55–58%)
 
-**👉 Insight:** Uneven weekly usage supports hybrid work and space consolidation strategies
+**Insight:** Uneven weekly usage supports hybrid work and space consolidation strategies
 
 ---
 
-### 🔹 4. Department-wise Utilization
+###  4. Department-wise Utilization
 
 | Department | Utilization |
 |------------|-------------|
@@ -61,20 +61,20 @@ Identified opportunities to reduce real estate costs by **15–25%** through dat
 | HR, Facilities | ~70–85% (Moderate) |
 | IT, Procurement | <30% (Low) |
 
-**👉 Insight:** Strong mismatch between allocated space and actual demand
+**Insight:** Strong mismatch between allocated space and actual demand
 
 ---
 
-### 🔹 5. Cost Efficiency
+### 5. Cost Efficiency
 
 - High-cost spaces are not always highly utilized
 - Weak relationship between cost and usage
 
-**👉 Key Finding:** Current space allocation is **not cost-efficient**
+**Key Finding:** Current space allocation is **not cost-efficient**
 
 ---
 
-## 💡 Business Recommendations
+## Business Recommendations
 
 - Implement hot-desking / shared seating
 - Reallocate underutilized spaces
@@ -84,7 +84,7 @@ Identified opportunities to reduce real estate costs by **15–25%** through dat
 
 ---
 
-## 🛠️ Tools & Technologies
+## Tools & Technologies
 
 | Tool | Purpose |
 |------|---------|
@@ -95,7 +95,7 @@ Identified opportunities to reduce real estate costs by **15–25%** through dat
 
 ---
 
-## 📊 Data Summary
+## Data Summary
 
 | Metric | Value |
 |--------|-------|
@@ -104,15 +104,7 @@ Identified opportunities to reduce real estate costs by **15–25%** through dat
 | Space Types | 5 |
 | Locations | Multiple offices |
 
----
-
-## 📷 Dashboard Preview
-
-> *Add screenshots here for visual impact*
-
----
-
-## 📂 Repository Contents
+## Repository Contents
 
 | File | Description |
 |------|-------------|
@@ -122,13 +114,13 @@ Identified opportunities to reduce real estate costs by **15–25%** through dat
 
 ---
 
-## 🚀 Key Takeaway
+## Key Takeaway
 
 > This project demonstrates how data analytics can uncover hidden inefficiencies in physical infrastructure, enabling organizations to make cost-saving, evidence-based decisions.
 
 ---
 
-## 👩‍💻 Author
+## Author
 
 **Renu**  
 MA Economics | Data Analytics & Policy Research
@@ -138,7 +130,7 @@ MA Economics | Data Analytics & Policy Research
 
 ---
 
-## 📎 How to Use This Repository
+## How to Use This Repository
 
 1. Download `Office_space.pbix` and open in Power BI Desktop
 2. Explore filters by space type, department, and time
@@ -146,7 +138,7 @@ MA Economics | Data Analytics & Policy Research
 
 ---
 
-## 📄 License
+## License
 
 This project is for portfolio purposes. Data is anonymized and used for educational demonstration.
 

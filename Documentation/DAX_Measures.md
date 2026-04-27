@@ -100,7 +100,3 @@ AVERAGEX(
     office_data[cost_per_hour] / office_data[duration_hours]
 )
 
-
-   ✅ Proper error handling with DIVIDE and BLANK()
-   ✅ Context-aware calculations using CALCULATE and VALUES
-   ============================================ */

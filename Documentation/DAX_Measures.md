@@ -1,102 +1,54 @@
-/* ============================================
-   OFFICE SPACE ANALYTICS - DAX MEASURES
-   Based on processing logic from Python script
-   ============================================ */
+// ============================================
+// POWER BI MEASURES - OFFICE SPACE ANALYTICS
+// Based on Python processing logic
+// ============================================
 
-// 1. AVERAGE UTILIZATION PERCENTAGE
-// Matches: df['space_efficiency_score'] = df['utilization_percentage'] / df['cost_per_hour']
-Avg Utilization % = AVERAGE(office_data[utilization_percentage])
+// ---------- CORE KPI MEASURES ----------
 
-// 2. OCCUPANCY RATIO (Validated with capacity)
-// Matches: df['occupancy_ratio'] = df['occupancy_count'] / df['space_capacity']
-Occupancy Ratio = 
-DIVIDE(
-    SUM(office_data[occupancy_count]), 
-    SUM(office_data[space_capacity]), 
-    0
-)
+// Average utilization percentage
+Utilization % = AVERAGE(office_data[utilization_percentage])
 
-// 3. COST PER OCCUPANT (Handles zero occupancy)
-// Matches: np.where(occupancy_count > 0, cost_per_hour / occupancy_count, np.nan)
+// Occupancy ratio (actual / capacity)
+Occupancy Ratio = DIVIDE(SUM(office_data[occupancy_count]), SUM(office_data[space_capacity]), 0)
+
+// Cost per occupant (handles zero occupancy)
 Cost per Occupant = 
-VAR ValidOccupancy = 
-    FILTER(
-        office_data, 
-        office_data[occupancy_count] > 0
-    )
-RETURN
-    DIVIDE(
-        SUMX(ValidOccupancy, office_data[cost_per_hour]),
-        SUMX(ValidOccupancy, office_data[occupancy_count]),
-        BLANK()
-    )
+VAR ValidSpaces = FILTER(office_data, office_data[occupancy_count] > 0)
+RETURN DIVIDE(SUMX(ValidSpaces, office_data[cost_per_hour]), SUMX(ValidSpaces, office_data[occupancy_count]), BLANK())
 
-// 4. SPACE EFFICIENCY SCORE (Composite KPI)
-// Matches: df['space_efficiency_score'] = df['utilization_percentage'] / df['cost_per_hour']
-Space Efficiency Score = 
-DIVIDE(
-    [Avg Utilization %],
-    [Cost per Occupant],
-    0
-)
+// Space efficiency score (composite KPI)
+Space Efficiency Score = DIVIDE([Utilization %], [Cost per Occupant], 0)
 
-// 5. DURATION IN HOURS (Average)
-// Matches: df['duration_hours'] = (end_time - start_time).total_seconds() / 3600
-Avg Duration Hours = 
-AVERAGE(office_data[duration_hours])
+// Average meeting duration in hours
+Avg Duration Hours = AVERAGE(office_data[duration_hours])
 
-// 6. UTILIZATION BY HOUR OF DAY
-// Matches: df['start_hour'] = df['start_time'].dt.hour
-Utilization by Hour = 
-CALCULATE(
-    [Avg Utilization %],
-    VALUES(office_data[start_hour])
-)
+// ---------- TIME ANALYSIS ----------
 
-// 7. UTILIZATION BY DAY OF WEEK
-// Matches: df['day_of_week'] = df['date'].dt.day_name()
-Utilization by Weekday = 
-CALCULATE(
-    [Avg Utilization %],
-    VALUES(office_data[day_of_week])
-)
+// Utilization by start hour
+Utilization by Hour = CALCULATE([Utilization %], VALUES(office_data[start_hour]))
 
-// 8. CAPACITY VIOLATION CHECK (Data Quality)
-// Checks if occupancy exceeds capacity
-Capacity Violations Count = 
-COUNTROWS(
-    FILTER(
-        office_data, 
-        office_data[occupancy_count] > office_data[space_capacity]
-    )
-)
+// Utilization by day of week
+Utilization by Weekday = CALCULATE([Utilization %], VALUES(office_data[day_of_week]))
 
-// 9. DEPARTMENT RANKING by Utilization
-Department Rank = 
-RANKX(
-    ALL(office_data[department_name]),
-    [Avg Utilization %],
-    ,
-    DESC,
-    Dense
-)
+// ---------- DATA QUALITY ----------
 
-// 10. UNDERUTILIZED FLAG (Below 15%)
-// Threshold-based classification
-Is Underutilized = 
-IF(
-    [Avg Utilization %] < 0.15,  -- 15% threshold
-    "Underutilized",
-    "Well Utilized"
-)
+// Count of capacity violations
+Capacity Violations = COUNTROWS(FILTER(office_data, office_data[occupancy_count] > office_data[space_capacity]))
 
-// 11. TOTAL COST ANALYSIS
+// ---------- RANKING ----------
+
+// Department rank by utilization
+Department Rank = RANKX(ALL(office_data[department_name]), [Utilization %], , DESC, Dense)
+
+// ---------- CLASSIFICATION ----------
+
+// Underutilized flag (below 15%)
+Is Underutilized = IF([Utilization %] < 0.15, "Underutilized", "Well Utilized")
+
+// ---------- COST ANALYSIS ----------
+
+// Total cost sum
 Total Cost = SUM(office_data[cost_per_hour])
 
-// 12. COST PER HOUR (Weighted Average)
-Avg Cost per Hour = 
-AVERAGEX(
-    office_data,
-    office_data[cost_per_hour] / office_data[duration_hours]
-)
-
+// Weighted average cost per hour
+Avg Cost per Hour = AVERAGEX(office_data, office_data[cost_per_hour] / office_data[duration_hours])

@@ -1,0 +1,65 @@
+import pandas as pd
+import numpy as np
+
+# Load Excel file
+df = pd.read_excel("/content/office_data.xlsx")
+
+# Show first rows
+print(df.head())
+
+# Check column types
+print("\nDATA TYPES:\n")
+print(df.dtypes)
+
+# Missing values check
+print("\nMISSING VALUES:\n")
+print(df.isnull().sum())
+
+# Structure overview
+print("\nINFO:\n")
+print(df.info())
+
+# Convert to datetime
+df['date'] = pd.to_datetime(df['date'])
+df['start_time'] = pd.to_datetime(df['start_time'])
+df['end_time'] = pd.to_datetime(df['end_time'])
+
+# Hour of start
+df['start_hour'] = df['start_time'].dt.hour
+
+# Day of week
+df['day_of_week'] = df['date'].dt.day_name()
+
+# Duration in hours
+df['duration_hours'] = (df['end_time'] - df['start_time']).dt.total_seconds() / 3600
+
+# Fill missing space names
+df['space_name'] = df['space_name'].fillna('Unknown Space')
+
+# Occupancy ratio
+df['occupancy_ratio'] = df['occupancy_count'] / df['space_capacity']
+
+# Cost per occupant (handles zero occupancy)
+df['cost_per_occupant'] = np.where(
+    df['occupancy_count'] > 0,
+    df['cost_per_hour'] / df['occupancy_count'],
+    np.nan
+)
+
+# Remove infinite values
+df['cost_per_occupant'] = df['cost_per_occupant'].replace([np.inf, -np.inf], np.nan)
+
+# Efficiency score (simple composite KPI)
+df['space_efficiency_score'] = df['utilization_percentage'] / df['cost_per_hour']
+
+# Final check
+print(df.dtypes)
+print(df.head())
+print(df.isnull().sum())
+
+# Export to Excel
+df.to_excel("office_clean.xlsx", index=False)
+
+# Download file (Google Colab only)
+from google.colab import files
+files.download("office_clean.xlsx")
